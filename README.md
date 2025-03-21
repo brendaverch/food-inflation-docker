@@ -39,17 +39,17 @@ Estrutura
 - Dockerfile - Define a imagem Docker.
 - .dockerignore - Ignora arquivos/pastas desnecessárias.
 
-## 🚀 **4. Como Rodar o Docker
+## 🚀 **4. Como Rodar o Docker**
 
 ### 1️⃣ Baixar a Imagem do Docker Hub
 
-bash
+``` bash
 docker pull brendaverch/food-inflation:1.0
-
+```
 ### 2️⃣ Executar o Container
 
-bash
+``` bash
 docker run brendaverch/food-inflation:1.0
-
+```
 
 Isso irá rodar o script app.py, que carrega o dataset, realiza o pré-processamento, treina o modelo e exibe as métricas de avaliação no terminal.
