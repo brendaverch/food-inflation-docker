@@ -29,9 +29,13 @@ test:
   stage: test
   image: python:3.9
   before_script:
-    - pip install -r requirements.txt pytest pytest-cov
+    - python -m venv venv
+    - source venv/bin/activate  # Linux/MacOS
+    - pip install --upgrade pip
+    - pip install -r requirements.txt pytest pytest-cov flake8
   script:
-    - python -m pytest tests/ --cov=app --cov-report=xml
+    - flake8 app.py --max-line-length=120 --ignore=F401
+    - python -m pytest tests/ -v --cov=app --cov-report=xml
   artifacts:
     reports:
       coverage_report:
