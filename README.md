@@ -2,16 +2,20 @@
 
 Este projeto contém um **modelo de Machine Learning** para previsão da inflação de alimentos. Ele foi desenvolvido dentro de um ambiente **Docker** para facilitar a execução e replicação.
 
+![GitLab CI](https://img.shields.io/badge/GitLab-CI/CD-orange)
+![Python](https://img.shields.io/badge/Python-3.9-blue)
+![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-1.2.0-green)
+![Docker](https://img.shields.io/badge/Docker-20.10.16-lightblue)
 ---
 
 ## 📌 **1. Descrição do Projeto**
 
-O objetivo deste projeto é analisar a inflação de alimentos utilizando um dataset do **Kaggle** e um modelo preditivo simples. Para isso, utilizamos **Python**, bibliotecas de ciência de dados, e empacotamos tudo em um **container Docker** para garantir um ambiente padronizado.
+Solução de machine learning para previsão de inflação de alimentos com pipeline completo de CI/CD no GitLab. Este projeto demonstra:
 
-O container Docker contém:
-- Um script app.py que faz a leitura do dataset, pré-processamento e treinamento do modelo.
-- Um Dockerfile que define a imagem para execução do projeto.
-- Um requirements.txt listando todas as bibliotecas necessárias.
+- Pré-processamento de dados e modelagem com Random Forest
+- Containerização com Docker
+- Testes automatizados e verificações de qualidade
+- Integração e Deployment Contínuos
 
 ---
 
@@ -26,6 +30,7 @@ O projeto foi desenvolvido com as seguintes tecnologias:
 | **Scikit-Learn** | Biblioteca para aprendizado de máquina       |
 | **Pandas & NumPy** | Manipulação e análise de dados             |
 | **GitHub**       | Controle de versão e repositório do projeto  |
+| **CI/CD**        | GitLab Pipelines                             |
 
 ---
 
@@ -34,10 +39,14 @@ O projeto foi desenvolvido com as seguintes tecnologias:
 A estrutura do repositório é a seguinte:
 Estrutura
 
-- app.py - Script principal que lê o CSV, treina e avalia o modelo.
-- requirements.txt - Bibliotecas necessárias (pandas, numpy, scikit-learn, etc.).
-- Dockerfile - Define a imagem Docker.
-- .dockerignore - Ignora arquivos/pastas desnecessárias.
+food-inflation-docker/
+├── app.py # Pipeline principal de ML
+├── tests/ # Testes unitários
+│ └── test_app.py
+├── requirements.txt # Dependências
+├── Dockerfile # Configuração do container
+├── .gitlab-ci.yml # Pipeline de CI/CD
+└── README.md
 
 ## 🚀 **4. Como Rodar o Docker**
 
@@ -53,7 +62,13 @@ docker run brendaverch/food-inflation:1.0
 ```
 
 Isso irá rodar o script app.py, que carrega o dataset, realiza o pré-processamento, treina o modelo e exibe as métricas de avaliação no terminal.
-<<<<<<< HEAD
 
-=======
->>>>>>> e2e712b7e66d4b65656ad17576ebae6c451a1ca8
+## 🚀 **5. Pipeline CI/CD**
+
+O pipeline no GitLab contém três estágios:
+
+Lint: Verificação de qualidade de código (Pylint, Flake8)
+
+Test: Testes unitários com relatório de cobertura
+
+Build: Criação e push da imagem Docker
