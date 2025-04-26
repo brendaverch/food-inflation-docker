@@ -31,10 +31,10 @@ test:
   before_script:
     - python -m pip install --upgrade pip
     - python -m venv venv
-    - source venv/bin/activate  
-    - pip install wheel 
+    - source venv/bin/activate
+    - pip install wheel
     - pip install -r requirements.txt pytest pytest-cov scikit-learn pandas numpy
-    - python -c "import sklearn; print(f'scikit-learn version: {sklearn.__version__}')"  # Verificação
+    - python -c "import sklearn; print(f'scikit-learn version: {sklearn.__version__}')"
   script:
     - python -m pytest tests/ -v --cov=app --cov-report=xml
   artifacts:
