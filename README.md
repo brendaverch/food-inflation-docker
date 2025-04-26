@@ -53,4 +53,7 @@ docker run brendaverch/food-inflation:1.0
 ```
 
 Isso irá rodar o script app.py, que carrega o dataset, realiza o pré-processamento, treina o modelo e exibe as métricas de avaliação no terminal.
+<<<<<<< HEAD
 
+=======
+>>>>>>> e2e712b7e66d4b65656ad17576ebae6c451a1ca8
