@@ -4,10 +4,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score
 
-def main(data_path="CPI_dataset.csv"):  
+def main(data_path="CPI_dataset.csv"):
 
-    df = pd.read_csv(data_path)  
-   
+    df = pd.read_csv(data_path)
+
     print("\n== Leitura do Dataset ==")
     print(f"Formato inicial: {df.shape[0]} linhas, {df.shape[1]} colunas.")
     print("Colunas:", list(df.columns))
@@ -57,9 +57,9 @@ def main(data_path="CPI_dataset.csv"):
     y_pred_test = regressor.predict(X_test)
 
     mse_train = mean_squared_error(y_train, y_pred_train)
-    mse_test  = mean_squared_error(y_test,  y_pred_test)
-    r2_train  = r2_score(y_train, y_pred_train)
-    r2_test   = r2_score(y_test,  y_pred_test)
+    mse_test = mean_squared_error(y_test,  y_pred_test)
+    r2_train = r2_score(y_train, y_pred_train)
+    r2_test = r2_score(y_test,  y_pred_test)
 
     print("\n== Métricas de Desempenho ==")
     print(f"MSE Treino: {mse_train:.4f} | R² Treino: {r2_train:.4f}")
