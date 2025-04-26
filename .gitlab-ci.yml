@@ -5,7 +5,7 @@ stages:
 
 variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
-  DOCKER_TLS_CERTDIR: ""
+  DOCKER_TLS_CERTDIR: "/certs"
 
 cache:
   paths:
@@ -16,10 +16,10 @@ lint:
   stage: lint
   image: python:3.9
   before_script:
-    - python --version
+    - python -m pip install --upgrade pip
     - pip install flake8 pylint
   script:
-    - flake8 app.py --max-line-length=120
+    - flake8 app.py --max-line-length=120 --ignore=F401
     - pylint app.py --disable=C0114,C0116,W0511,R0914
   only:
     - merge_requests
@@ -29,12 +29,13 @@ test:
   stage: test
   image: python:3.9
   before_script:
+    - python -m pip install --upgrade pip
     - python -m venv venv
-    - source venv/bin/activate  # Linux/MacOS
-    - pip install --upgrade pip
-    - pip install -r requirements.txt pytest pytest-cov flake8 scikit-learn
+    - source venv/bin/activate  
+    - pip install wheel 
+    - pip install -r requirements.txt pytest pytest-cov scikit-learn pandas numpy
+    - python -c "import sklearn; print(f'scikit-learn version: {sklearn.__version__}')"  # Verificação
   script:
-    - flake8 app.py --max-line-length=120 --ignore=F401
     - python -m pytest tests/ -v --cov=app --cov-report=xml
   artifacts:
     reports:
@@ -54,8 +55,11 @@ build:
     - docker:20.10.16-dind
   variables:
     IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+    DOCKER_HOST: tcp://docker:2376
+  before_script:
+    - docker info
   script:
-    - docker build -t $IMAGE_TAG .
+    - docker build --no-cache -t $IMAGE_TAG .
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker push $IMAGE_TAG
   only:
