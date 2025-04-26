@@ -4,10 +4,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score
 
-def main():
-    # 1) Leitura do dataset
-    df = pd.read_csv("CPI_dataset.csv")
+def main(data_path="CPI_dataset.csv"):  
 
+    df = pd.read_csv(data_path)  
+   
     print("\n== Leitura do Dataset ==")
     print(f"Formato inicial: {df.shape[0]} linhas, {df.shape[1]} colunas.")
     print("Colunas:", list(df.columns))
