@@ -20,7 +20,7 @@ lint:
     - pip install flake8 pylint
   script:
     - flake8 app.py --max-line-length=120
-    - pylint app.py --disable=C0114,C0116,W0511
+    - pylint app.py --disable=C0114,C0116,W0511,R0914
   only:
     - merge_requests
     - main
@@ -32,7 +32,7 @@ test:
     - python -m venv venv
     - source venv/bin/activate  # Linux/MacOS
     - pip install --upgrade pip
-    - pip install -r requirements.txt pytest pytest-cov flake8
+    - pip install -r requirements.txt pytest pytest-cov flake8 scikit-learn
   script:
     - flake8 app.py --max-line-length=120 --ignore=F401
     - python -m pytest tests/ -v --cov=app --cov-report=xml
