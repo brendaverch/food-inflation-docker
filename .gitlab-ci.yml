@@ -1,29 +1,49 @@
 stages:
+  - lint
   - test
   - build
 
 variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
   DOCKER_TLS_CERTDIR: ""
 
-# Executa testes Python
+cache:
+  paths:
+    - .cache/pip
+    - venv/
+
+lint:
+  stage: lint
+  image: python:3.9
+  before_script:
+    - python --version
+    - pip install flake8 pylint
+  script:
+    - flake8 app.py --max-line-length=120
+    - pylint app.py --disable=C0114,C0116,W0511
+  only:
+    - merge_requests
+    - main
+
 test:
   stage: test
   image: python:3.9
   before_script:
-    - pip install -r requirements.txt
+    - pip install -r requirements.txt pytest pytest-cov
   script:
-    - python -m pytest tests/ --cov=app/ --cov-report=xml
+    - python -m pytest tests/ --cov=app --cov-report=xml
   artifacts:
     reports:
-      cobertura: coverage.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
     paths:
       - coverage.xml
   only:
     - merge_requests
     - main
 
-# Constrói a imagem Docker
-build_image:
+build:
   stage: build
   image: docker:20.10.16
   services:
